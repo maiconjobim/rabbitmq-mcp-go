@@ -1,0 +1,18 @@
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /root/
+
+# Copy the pre-built binary file from the builder stage
+COPY rabbitmq-mcp-go .
+
+# Default environment variables
+ENV RABBITMQ_URL="amqp://guest:guest@localhost:5672/"
+ENV MCP_PORT="9097"
+
+# Expose the port
+EXPOSE ${MCP_PORT}
+
+# Run the application
+ENTRYPOINT ["./rabbitmq-mcp-go"] 
