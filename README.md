@@ -199,7 +199,3 @@ To add a new MCP tool:
 3. Register the tool in the main application
 4. Add corresponding prompts in `internal/prompts/` if needed
 5. Document the tool in the tools README
-
-## License
-
-[Add your license information here] 
