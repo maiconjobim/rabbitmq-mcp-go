@@ -8,7 +8,7 @@ before:
 
 builds:
   - binary: "{{ .ProjectName }}"
-    main: ./cmd
+    main: ./cmd/rabbitmq-mcp-server
     env:
       - CGO_ENABLED=0
     goos:
