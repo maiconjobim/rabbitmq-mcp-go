@@ -15,7 +15,7 @@ COPY . .
 # Build the Go app
 # -ldflags="-w -s" reduces the size of the binary by removing debug information.
 # CGO_ENABLED=0 disables CGO for static linking, useful for alpine base images.
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /rabbitmq-mcp-go ./cmd/
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /rabbitmq-mcp-go ./cmd/rabbitmq-mcp-go/main.go
 
 # --- Start final stage --- #
 
