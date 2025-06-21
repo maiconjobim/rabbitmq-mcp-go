@@ -11,6 +11,8 @@ This server provides an implementation for interacting with RabbitMQ via the MCP
 [![GitHub Release](https://img.shields.io/github/v/release/maiconjobim/rabbitmq-mcp-go?sort=semver)](https://github.com/maiconjobim/rabbitmq-mcp-go/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+![rabbitmq-mcp-demo](./static/claude-rabbitmq-mcp-go.gif)
+
 ## Overview
 
 The RabbitMQ MCP Server bridges the gap between LLM models and RabbitMQ, allowing them to:
