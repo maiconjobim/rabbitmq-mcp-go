@@ -2,6 +2,22 @@
 
 A Go implementation of Model Control Protocol (MCP) server for RabbitMQ integration.
 
+This server provides an implementation for interacting with RabbitMQ via the MCP protocol, enabling LLM models to perform common RabbitMQ operations through a standardized interface.
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/maiconjobim/rabbitmq-mcp-go)](https://goreportcard.com/report/github.com/maiconjobim/rabbitmq-mcp-go)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/maiconjobim/rabbitmq-mcp-go?logo=go)](https://github.com/maiconjobim/rabbitmq-mcp-go/blob/main/go.mod)
+[![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
+[![Go Reference](https://pkg.go.dev/badge/github.com/maiconjobim/rabbitmq-mcp-go.svg)](https://pkg.go.dev/github.com/maiconjobim/rabbitmq-mcp-go)
+[![GitHub Release](https://img.shields.io/github/v/release/maiconjobim/rabbitmq-mcp-go?sort=semver)](https://github.com/maiconjobim/rabbitmq-mcp-go/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## Overview
+
+The RabbitMQ MCP Server bridges the gap between LLM models and RabbitMQ, allowing them to:
+
+- Publish a message to a RabbitMQ queue or exchange
+
+
 ## Project Structure
 
 ```
@@ -25,12 +41,6 @@ A Go implementation of Model Control Protocol (MCP) server for RabbitMQ integrat
 - **prompts/**: Stores prompt templates and configurations used by the MCP tools.
 - **resources/**: Houses shared utilities, helper functions, and reusable components.
 - **config/**: Manages application configuration.
-
-## Requirements
-
-- Go 1.24.3 or higher
-- RabbitMQ server
-- Cursor IDE or Claude Desktop for AI integration
 
 ## Getting Started
 
@@ -67,26 +77,7 @@ Add this configuration to your MCP client settings:
     "rabbitmq": {
       "command": "rabbitmq-mcp-server",
       "env": {
-        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
-        "MCP_TRANSPORT": "stdio"
-      }
-    }
-  }
-}
-```
-
-For secured environments:
-
-```json
-{
-  "mcpServers": {
-    "rabbitmq": {
-      "command": "rabbitmq-mcp-server",
-      "env": {
-        "RABBITMQ_URL": "amqps://user:password@rabbitmq-host:5671/",
-        "MCP_TRANSPORT": "stdio",
-        "RABBITMQ_TLS_ENABLE": "true",
-        "RABBITMQ_TLS_VERIFY": "true"
+        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/"
       }
     }
   }
@@ -103,8 +94,7 @@ To use with [Cursor](https://cursor.sh/), create or edit `~/.cursor/mcp.json`:
     "rabbitmq": {
       "command": "rabbitmq-mcp-server",
       "env": {
-        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
-        "MCP_TRANSPORT": "stdio"
+        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/"
       }
     }
   }
@@ -123,8 +113,7 @@ To use with Claude Desktop, edit your configuration file:
     "rabbitmq": {
       "command": "rabbitmq-mcp-server",
       "env": {
-        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
-        "MCP_TRANSPORT": "stdio"
+        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/"
       }
     }
   }
@@ -146,11 +135,11 @@ The publish tool allows you to send messages to RabbitMQ queues or exchanges thr
 
 ### Example Interactions
 
-1. Publishing to a Queue:
-```
-User: "Send a message 'Hello World' to the queue 'my_queue'"
+**1. Publishing to a Queue:**
+>User: "Send a message 'Hello World' to the queue 'my_queue'"
 
 AI Assistant will use the publish tool:
+```json
 {
   "queue": "my_queue",
   "message": "Hello, World!",
@@ -158,11 +147,17 @@ AI Assistant will use the publish tool:
 }
 ```
 
-2. Publishing JSON to an Exchange:
+**Response:**
+```json
+"Message published successfully to my_queue"
 ```
-User: "Publish order status update to the 'orders' exchange"
+
+**2. Publishing JSON to an Exchange:**
+
+> User: "Publish order status update to the 'orders' exchange"
 
 AI Assistant will use the publish tool:
+```json
 {
   "exchange": "orders",
   "message": "{\"order_id\": \"12345\", \"status\": \"completed\"}",
@@ -170,11 +165,16 @@ AI Assistant will use the publish tool:
 }
 ```
 
-3. Publishing with Headers:
+**Response:**
+```json
+"Message published successfully to orders"
 ```
-User: "Send a high-priority message to the notifications queue"
+
+**1. Publishing with Headers:**
+> User: "Send a high-priority message to the notifications queue"
 
 AI Assistant will use the publish tool:
+```json
 {
   "queue": "notifications",
   "message": "Important system update",
@@ -199,3 +199,11 @@ To add a new MCP tool:
 3. Register the tool in the main application
 4. Add corresponding prompts in `internal/prompts/` if needed
 5. Document the tool in the tools README
+
+### Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
